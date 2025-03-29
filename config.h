@@ -1,6 +1,6 @@
 #pragma once
 
-#define TAPPING_TERM 200
+#define TAPPING_TERM 170
 #define PERMISSIVE_HOLD
 #define LAYER_LOCK_IDLE_TIMEOUT 60000  // Turn off after 60 seconds.
 #define CAPS_WORD_INVERT_ON_SHIFT
