@@ -13,9 +13,11 @@ enum custom_keycodes {
     HR_K,
     HR_L,
     HR_SCLN,
+    HR_Z,
+    HR_SLSH,
 
     CKC_TAB,
-    CKC_SPC,
+    // CKC_SPC,
     CKC_ESC,
     CKC_RET,
     CKC_BSP,
@@ -44,9 +46,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_CAPS,    HR_A,    HR_S,    HR_D,    HR_F,   CKC_G,                         KC_H,    HR_J,    HR_K,    HR_L, HR_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CW_TOGG,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,CKC_RALT,
+      CW_TOGG,    HR_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, HR_SLSH,CKC_RALT,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          CKC_TAB, CKC_SPC, CKC_ESC,    CKC_RET, CKC_SPC, CKC_BSP
+                                          CKC_TAB,  KC_SPC, CKC_ESC,    CKC_RET,  KC_SPC, CKC_BSP
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -125,21 +127,25 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
     switch (keycode) {
         // left
-        SMTD_MT(HR_A, KC_A, KC_LEFT_GUI)
+        SMTD_LT(HR_A, KC_A, _SYM)
         SMTD_MT(HR_S, KC_S, KC_LEFT_ALT)
         SMTD_MT(HR_D, KC_D, KC_LSFT)
         SMTD_MT(HR_F, KC_F, KC_LEFT_CTRL)
+        SMTD_MT(HR_Z, KC_Z, KC_LEFT_GUI)
+
         // right
         SMTD_MT(HR_J, KC_J, KC_RIGHT_CTRL, 1)
         SMTD_MT(HR_K, KC_K, KC_RSFT)
         SMTD_MT(HR_L, KC_L, KC_LEFT_ALT)
-        SMTD_MT(HR_SCLN, KC_SCLN, KC_LEFT_GUI)
+        SMTD_LT(HR_SCLN, KC_SCLN, _SYM)
+        SMTD_MT(HR_SLSH, KC_SLSH, KC_LEFT_GUI)
+
         // thumbs
         SMTD_LT(CKC_TAB, KC_TAB, _NUM)
-        SMTD_LT(CKC_SPC, KC_SPC, _SYM)
+        SMTD_LT(CKC_BSP, KC_BSPC, _NUM)
+        // SMTD_LT(CKC_SPC, KC_SPC, _NAV)
         SMTD_LT(CKC_ESC, KC_ESC, _NAV)
         SMTD_LT(CKC_RET, KC_ENT, _NAV)
-        SMTD_LT(CKC_BSP, KC_BSPC, _NUM)
 
         SMTD_LT(CKC_G, KC_G, _MS)
         SMTD_MT(CKC_RALT, KC_BSLS, KC_RIGHT_ALT)
