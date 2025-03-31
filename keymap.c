@@ -17,7 +17,6 @@ enum custom_keycodes {
     HR_SLSH,
 
     CKC_TAB,
-    // CKC_SPC,
     CKC_ESC,
     CKC_RET,
     CKC_BSP,
@@ -143,7 +142,6 @@ void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
         // thumbs
         SMTD_LT(CKC_TAB, KC_TAB, _NUM)
         SMTD_LT(CKC_BSP, KC_BSPC, _NUM)
-        // SMTD_LT(CKC_SPC, KC_SPC, _NAV)
         SMTD_LT(CKC_ESC, KC_ESC, _NAV)
         SMTD_LT(CKC_RET, KC_ENT, _NAV)
 
@@ -160,7 +158,8 @@ uint32_t get_smtd_timeout(uint16_t keycode, smtd_timeout timeout) {
     case HR_L:
     case HR_SCLN:
         if (timeout == SMTD_TIMEOUT_TAP) return 300;
-        if (timeout == SMTD_TIMEOUT_RELEASE) return 30;
+        if (timeout == SMTD_TIMEOUT_RELEASE) return 10;
+        if (timeout == SMTD_TIMEOUT_SEQUENCE) return 250;
         break;
     }
     return get_smtd_timeout_default(timeout);
