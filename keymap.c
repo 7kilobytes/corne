@@ -1,32 +1,6 @@
 #include QMK_KEYBOARD_H
 
 #include "keymap_colemak.h"
-
-enum custom_keycodes {
-    SMTD_KEYCODES_BEGIN = SAFE_RANGE,
-
-    HR_A,
-    HR_S,
-    HR_D,
-    HR_F,
-    HR_J,
-    HR_K,
-    HR_L,
-    HR_SCLN,
-    HR_Z,
-    HR_SLSH,
-
-    CKC_TAB,
-    CKC_ESC,
-    CKC_RET,
-    CKC_BSP,
-
-    CKC_G,     // mouse layer
-    CKC_RALT,  // for cyrillic layout
-
-    SMTD_KEYCODES_END,
-};
-
 #include "sm_td.h"
 
 enum custom_layers {
@@ -43,11 +17,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //,-----------------------------------------------------.                    ,-----------------------------------------------------.
        KC_GRV,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                         KC_Y,    KC_U,    KC_I,    KC_O,   KC_P,  KC_LBRC,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_CAPS,    HR_A,    HR_S,    HR_D,    HR_F,   CKC_G,                         KC_H,    HR_J,    HR_K,    HR_L, HR_SCLN, KC_QUOT,
+      KC_CAPS,    KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                         KC_H,    KC_J,    KC_K,    KC_L, KC_SCLN, KC_QUOT,
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      CW_TOGG,    HR_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, HR_SLSH,CKC_RALT,
+      CW_TOGG,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                         KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_BSLS,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                          CKC_TAB,  KC_SPC, CKC_ESC,    CKC_RET,  KC_SPC, CKC_BSP
+                                          KC_TAB,  KC_SPC, KC_ESC,    KC_ENT,  KC_SPC, KC_BSPC
                                       //`--------------------------'  `--------------------------'
 
   ),
@@ -123,40 +97,41 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
    return true;
 }
 
-void on_smtd_action(uint16_t keycode, smtd_action action, uint8_t tap_count) {
+smtd_resolution on_smtd_action (uint16_t keycode, smtd_action action, uint8_t tap_count) {
     switch (keycode) {
         // left
-        SMTD_LT(HR_A, KC_A, _SYM)
-        SMTD_MT(HR_S, KC_S, KC_LEFT_ALT)
-        SMTD_MT(HR_D, KC_D, KC_LSFT)
-        SMTD_MT(HR_F, KC_F, KC_LEFT_CTRL)
-        SMTD_MT(HR_Z, KC_Z, KC_LEFT_GUI)
+        SMTD_LT(KC_A, _SYM)
+        SMTD_MT(KC_S, KC_LEFT_ALT)
+        SMTD_MT(KC_D, KC_LSFT)
+        SMTD_MT(KC_F, KC_LEFT_CTRL)
+        SMTD_MT(KC_Z, KC_LEFT_GUI)
 
         // right
-        SMTD_MT(HR_J, KC_J, KC_RIGHT_CTRL, 1)
-        SMTD_MT(HR_K, KC_K, KC_RSFT)
-        SMTD_MT(HR_L, KC_L, KC_LEFT_ALT)
-        SMTD_LT(HR_SCLN, KC_SCLN, _SYM)
-        SMTD_MT(HR_SLSH, KC_SLSH, KC_LEFT_GUI)
+        SMTD_MT(KC_J, KC_RIGHT_CTRL, 1)
+        SMTD_MT(KC_K, KC_RSFT)
+        SMTD_MT(KC_L, KC_LEFT_ALT)
+        SMTD_LT(KC_SCLN, _SYM)
+        SMTD_MT(KC_SLSH, KC_LEFT_GUI)
 
         // thumbs
-        SMTD_LT(CKC_TAB, KC_TAB, _NUM)
-        SMTD_LT(CKC_BSP, KC_BSPC, _NUM)
-        SMTD_LT(CKC_ESC, KC_ESC, _NAV)
-        SMTD_LT(CKC_RET, KC_ENT, _NAV)
+        SMTD_LT(KC_TAB, _NUM)
+        SMTD_LT(KC_BSPC, _NUM)
+        SMTD_LT(KC_ESC, _NAV)
+        SMTD_LT(KC_ENT, _NAV)
 
-        SMTD_LT(CKC_G, KC_G, _MS)
-        SMTD_MT(CKC_RALT, KC_BSLS, KC_RIGHT_ALT)
+        SMTD_LT(KC_G, _MS)
+        SMTD_MT(KC_BSLS, KC_RIGHT_ALT)
 
     }
+    return SMTD_RESOLUTION_UNHANDLED;
 }
 
 uint32_t get_smtd_timeout(uint16_t keycode, smtd_timeout timeout) {
     switch(keycode) {
-    case HR_A:
-    case HR_S:
-    case HR_L:
-    case HR_SCLN:
+    case KC_A:
+    case KC_S:
+    case KC_L:
+    case KC_SCLN:
         if (timeout == SMTD_TIMEOUT_TAP) return 300;
         if (timeout == SMTD_TIMEOUT_RELEASE) return 10;
         if (timeout == SMTD_TIMEOUT_SEQUENCE) return 250;
